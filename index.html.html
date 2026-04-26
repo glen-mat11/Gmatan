@@ -1,18 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">    
 <body>
-    <p id="demo"></p>
-
-<script>
-let order = 0;
-let text = "You can't place Order !";
-
-if (age >= 1) {
-  text = "Go On and place your ORDER!";
-}
-
-document.getElementById("demo").innerHTML = text;
-</script>
+   
 <style>
     p {
       text-align: end;  
@@ -51,12 +40,22 @@ document.getElementById("demo").innerHTML = text;
     <input type="text" id="lname" name="lname" required>
     <input type="submit" value="submit">
 </form>
-<label for="chicken prices">Choose a price:</label>
-<select id="prices" name="prices">
-<option value="$6">$6</option>
-<option value="$5">$5</option>
-<option value="$4">$4</option>
-</select>
+<div style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    <h3>Quick Order Calculator</h3>
+    <label for="prices">Choose a size/price:</label>
+    <select id="prices" onchange="calculateTotal()">
+        <option value="6">Premium Large - $6</option>
+        <option value="5">Standard - $5</option>
+        <option value="4">Small - $4</option>
+    </select>
+    
+    <label for="qty">Quantity:</label>
+    <input type="number" id="qty" value="1" min="1" oninput="calculateTotal()" style="width: 50px;">
+    
+    <p id="total-price">Total: $6</p>
+    <button type="button" onclick="placeOrder()">Confirm Order</button>
+    <p id="order-status"></p>
+</div>
 <textarea name="comments" rows="10" cols="30">
     DESCRIBE THE TASTE OF THE BROILERS 
 </textarea>
@@ -101,9 +100,40 @@ document.getElementById("demo").innerHTML = text;
         <p id="demo"></p>
 
 <script>
-const d = new Date();
-document.getElementById("demo").innerHTML = d;
+    // 1. Dynamic Greeting
+    const hour = new Date().getHours();
+    let greeting = "Welcome!";
+    if (hour < 12) greeting = "Good Morning! Get the freshest broilers for lunch.";
+    else if (hour < 18) greeting = "Good Afternoon! Perfect time for a BBQ.";
+    else greeting = "Good Evening! Order now for tomorrow morning.";
+    document.getElementById("welcome-msg").innerText = greeting;
+
+    // 2. Real-time Date Display
+    document.getElementById("date-display").innerHTML = "Today's Date: " + new Date().toDateString();
+
+    // 3. Live Price Calculator
+    function calculateTotal() {
+        const price = document.getElementById("prices").value;
+        const qty = document.getElementById("qty").value;
+        const total = price * qty;
+        document.getElementById("total-price").innerText = "Total: $" + total;
+    }
+
+    // 4. Order Confirmation Logic
+    function placeOrder() {
+        const qty = document.getElementById("qty").value;
+        const status = document.getElementById("order-status");
+        
+        if (qty >= 1) {
+            status.innerHTML = "✅ Go on and place your order for " + qty + " birds!";
+            alert("Thank you! Our team will contact you shortly.");
+        } else {
+            status.innerHTML = "❌ You can't place an order for 0!";
+            status.style.color = "red";
+        }
+    }
 </script>
+
  
     
 <footer><em><Italic>come for PALATIBILITY</Italic></em></footer>
